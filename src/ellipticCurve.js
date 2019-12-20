@@ -5,9 +5,16 @@
 */
 function makeEllipticCurve(a, b, prime) {
 
+  if (4n*a**3n+27n*b**2n===0) {
+    console.error('Singular curve. Cannot instantiate.');
+    return null;
+  }
+
   this.a = a;
   this.b = b;
   this.prime = prime;
+
+  this.PointAtInfinity = { x:null, y:null };
 
   this.toString = function() { return `y^2 = x^3 + ${a} x + ${b}` }
 
@@ -58,8 +65,8 @@ function makeEllipticCurve(a, b, prime) {
   }
 
   this.add = function(P,Q) {
-    if (P===null) return Q;
-    if (Q===null) return P;
+    if (P===null || P.x==null) return Q;
+    if (Q===null || Q.x==null) return P;
     let r = [0n,0n];
     let s;
     // when p,q are not the point at infinity O
@@ -107,32 +114,3 @@ function makeEllipticCurve(a, b, prime) {
 
 
 module.exports = { makeEllipticCurve: makeEllipticCurve };
-
-
-
-// TESTS
-let generator = [ 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798n, 0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8n ];
-let prime = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2Fn; //  2n**256n - 2n**32n - 977n
-
-const ec = new makeEllipticCurve(0n,7n,prime);
-// console.log(ec.toString());
-
-const G = ec.makePoint(generator);
-// console.log(G);
-// console.log(ec.isInCurve(G));
-
-const G2 = ec.double(G);
-// console.log(G2);
-
-const G4 = ec.double(G2);
-// console.log(G4);
-
-const GplusG = ec.add(G,G);
-console.log(GplusG);
-
-let sum = G;
-for(let i=2; i<100; i++) {
-  sum = ec.add(sum,G);
-  let dot = ec.multiplyByScalar(G, BigInt(i));
-  console.log(`${i}: ${sum[0]===dot[0]}, ${sum[1]===dot[1]}`);
-}

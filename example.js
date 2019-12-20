@@ -38,6 +38,12 @@ console.log(GplusO==G);
 const OplusG = secp256k1.add(O,G);
 console.log(OplusG==G);
 
+// Inverse of a point
+const invG = secp256k1.inverseOf(G);
+console.log(`Inverse of G:`); console.log(invG);
+const GplusInvG = secp256k1.add(G,invG);
+console.log(`G + invG  = `); console.log(GplusInvG);
+
 
 // Add and multiply points. Check for consistency
 let sum = G;

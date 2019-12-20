@@ -76,9 +76,9 @@ function makeEllipticCurve(a, b, prime) {
       const dem = fieldModP(P.x-Q.x);
       s = fieldModP(num*invModp(dem)); // the slope between two points
     }
-    else if (P.y===-Q.y) {
+    else if ( (P.y+Q.y)%prime === 0n ) {
       // the points are in the same vertical line
-      return null; // addition not defined in this case
+      return this.PointAtInfinity;
     }
     else {
       // both points are the same
@@ -109,6 +109,11 @@ function makeEllipticCurve(a, b, prime) {
     }
     return Q;
   }
+
+  this.inverseOf = function(P) {
+    return this.makePoint([ P.x, (prime-P.y) ]);
+  }
+
 
 }
 

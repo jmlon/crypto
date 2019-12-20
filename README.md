@@ -7,3 +7,5 @@ Implementation of the basic elliptic curve operations on F_p:
 - Double a point
 - Multiply a point by a scalar
 - Check if a point is in the elliptic curve
+
+See the file examples.js for basic usage patterns.

@@ -5,9 +5,9 @@
 */
 function makeEllipticCurve(a, b, prime) {
 
-  if (4n*a**3n+27n*b**2n===0) {
-    console.error('Singular curve. Cannot instantiate.');
-    return null;
+  if (4n*a**3n+27n*b**2n===0n) {
+    //console.error('Singular curve. Cannot instantiate.');
+    throw new Error('Invalid curve parameters');
   }
 
   this.a = a;

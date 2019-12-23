@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/jmlon/crypto/issues"
   },
-  "homepage": "https://github.com/jmlon/crypto#readme"
+  "homepage": "https://github.com/jmlon/crypto#readme",
+  "devDependencies": {
+    "mocha": "^6.2.2"
+  }
 }

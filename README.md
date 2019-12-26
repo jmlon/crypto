@@ -10,3 +10,10 @@ Implementation of the basic elliptic curve operations on F_p:
 - The inverse of a point wrt. addition
 
 See the file examples.js for basic usage patterns.
+
+
+## References
+
+- [Corbellini, A. Elliptic Curve Cryptography: a gentle introduction](https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/)
+
+- [Corbellini, A. Elliptic Curve Cryptography: finite fields and discrete logarithms](https://andrea.corbellini.name/2015/05/23/elliptic-curve-cryptography-finite-fields-and-discrete-logarithms/)

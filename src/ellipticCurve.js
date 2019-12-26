@@ -115,6 +115,12 @@ function makeEllipticCurve(a, b, prime) {
   }
 
 
+  // TODOs
+  // 1. Implement Schoof's algorithm to calculate the order of the group
+  // 2. Calculate the order of the subgroup of a point P
+  
+
+
 }
 
 

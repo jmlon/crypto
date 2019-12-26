@@ -17,3 +17,7 @@ See the file examples.js for basic usage patterns.
 - [Corbellini, A. Elliptic Curve Cryptography: a gentle introduction](https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/)
 
 - [Corbellini, A. Elliptic Curve Cryptography: finite fields and discrete logarithms](https://andrea.corbellini.name/2015/05/23/elliptic-curve-cryptography-finite-fields-and-discrete-logarithms/)
+
+- [Corbellini, A. Elliptic Curve Cryptography: ECDH and ECDSA](https://andrea.corbellini.name/2015/05/30/elliptic-curve-cryptography-ecdh-and-ecdsa/)
+
+- [Schoof's algorithm](https://en.wikipedia.org/wiki/Schoof%27s_algorithm)

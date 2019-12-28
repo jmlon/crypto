@@ -15,7 +15,7 @@ const secp256k1 = new ellipticCurve.makeEllipticCurve(0n,7n,prime);
 console.log(secp256k1.toString());
 
 // Create a point and check it is in the curve
-const G = secp256k1.makePoint(generator);
+const G = new secp256k1.makePoint(generator);
 console.log(G);
 console.log(secp256k1.isInCurve(G));
 

@@ -14,11 +14,15 @@ function makeEllipticCurve(a, b, prime) {
   this.b = b;
   this.prime = prime;
 
-  this.PointAtInfinity = { x:null, y:null };
-
   this.toString = function() { return `y^2 = x^3 + ${a} x + ${b}` }
 
-  this.makePoint = function(array) { return { x:array[0], y:array[1] } }
+  this.makePoint = function(array) {
+    this.x = array[0];
+    this.y = array[1];
+    this.toString = () => { return `(${this.x}, ${this.y})`; }
+  }
+
+  this.PointAtInfinity = new this.makePoint([null, null]);
 
   // ref: https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
   function egcd(a,b) {
@@ -61,7 +65,7 @@ function makeEllipticCurve(a, b, prime) {
     let r = [0n,0n];
     r[0] = fieldModP(s**2n - P.x - P.x);
     r[1] = fieldModP(s*(P.x-r[0]) - P.y);
-    return this.makePoint(r);
+    return new this.makePoint(r);
   }
 
   this.add = function(P,Q) {
@@ -88,7 +92,7 @@ function makeEllipticCurve(a, b, prime) {
     }
     r[0] = fieldModP(s**2n - P.x - Q.x);
     r[1] = fieldModP(s*(P.x-r[0]) - P.y);
-    return this.makePoint(r);
+    return new this.makePoint(r);
   }
 
   this.isInCurve = function(P) {
@@ -100,7 +104,7 @@ function makeEllipticCurve(a, b, prime) {
   this.multiplyByScalar = function(P,k) {
     let Q = null;
     let R = P;
-    while(k>0) {
+    while(k>0n) {
       if (k%2n===1n) {
         Q = this.add(Q,R);
       }
@@ -111,14 +115,14 @@ function makeEllipticCurve(a, b, prime) {
   }
 
   this.inverseOf = function(P) {
-    return this.makePoint([ P.x, (prime-P.y) ]);
+    return new this.makePoint([ P.x, (prime-P.y) ]);
   }
 
 
   // TODOs
   // 1. Implement Schoof's algorithm to calculate the order of the group
   // 2. Calculate the order of the subgroup of a point P
-  
+
 
 
 }

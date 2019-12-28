@@ -27,5 +27,8 @@
   "homepage": "https://github.com/jmlon/crypto#readme",
   "devDependencies": {
     "mocha": "^6.2.2"
+  },
+  "dependencies": {
+    "random-bigint": "0.0.1"
   }
 }

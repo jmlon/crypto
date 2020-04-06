@@ -1,3 +1,4 @@
+// docs: https://nodejs.org/api/assert.html
 const assert = require("assert").strict; // node's built-in assertion library
 const ellipticCurve = require("../src/ellipticCurve");
 
@@ -30,7 +31,7 @@ describe("ECC", function() {
 
   let G;
   describe("Creating and checking points in the curve", function() {
-    G = ec.makePoint([16n,5n]);
+    G = new ec.makePoint([16n,5n]);
     it("Should create points", function() {
       assert.ok(G);
     });
@@ -38,7 +39,7 @@ describe("ECC", function() {
       assert.ok(ec.isInCurve(G));
     });
     it("Should verify if a point is not in the curve", function() {
-      assert.ok(!ec.isInCurve(ec.makePoint([15n,6n])));
+      assert.ok(!ec.isInCurve(new ec.makePoint([15n,6n])));
     });
   });
 
@@ -46,19 +47,21 @@ describe("ECC", function() {
     let twiceG, thriceG;
     it("computes the double of a point", function() {
       twiceG = ec.double(G);
-      assert.deepStrictEqual(twiceG, {x:20n, y:20n});
+      let expected = new ec.makePoint([20n,20n]);
+      assert.deepStrictEqual(twiceG, expected);
+      //assert.deepEqual(twiceG, expected);
     });
     it("computes the product of a point by a scalar", function() {
       thriceG = ec.multiplyByScalar(G,3n);
-      assert.deepStrictEqual(thriceG, {x:14n, y:14n});
+      assert.deepStrictEqual(thriceG, new ec.makePoint([14n,14n]));
     });
     it("adds points on the EC", function() {
       let fiveTimesG = ec.add(twiceG, thriceG);
-      assert.deepStrictEqual(fiveTimesG, {x:13n, y:10n});
+      assert.deepStrictEqual(fiveTimesG, new ec.makePoint([13n,10n]));
     });
     it("computes composite expressions on points of the EC", function() {
       let nineG = ec.add(ec.add(twiceG, thriceG), ec.multiplyByScalar(G,4n));
-      assert.deepStrictEqual(nineG, {x:4n, y:5n});
+      assert.deepStrictEqual(nineG, new ec.makePoint([4n,5n]));
     });
   });
 

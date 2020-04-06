@@ -12,6 +12,11 @@ Implementation of the basic elliptic curve operations on F_p:
 See the file examples.js for basic usage patterns.
 
 
+## Abount the examples
+- npm test : Run mocha tests.
+- node ecExamples.js : Runs the example program demonstrating elliptic curve operations.
+- node ecdhExample.js : Runs the elliptic curve diffie-hellman key agreement example.
+
 ## References
 
 - [Corbellini, A. Elliptic Curve Cryptography: a gentle introduction](https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/)

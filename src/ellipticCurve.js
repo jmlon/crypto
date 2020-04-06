@@ -1,8 +1,10 @@
 
 
 /**
-  y^2 = x^3 + ax + b
-*/
+ * Elliptic curves of the form y^2 = x^3 + ax + b
+ * @type {EllipticCurve}
+ */
+
 function makeEllipticCurve(a, b, prime) {
 
   if (4n*a**3n+27n*b**2n===0n) {
@@ -19,8 +21,8 @@ function makeEllipticCurve(a, b, prime) {
   this.makePoint = function(array) {
     this.x = array[0];
     this.y = array[1];
-    this.toString = () => { return `(${this.x}, ${this.y})`; }
   }
+  this.makePoint.prototype.toString = function() { return `(${this.x}, ${this.y})`; };
 
   this.PointAtInfinity = new this.makePoint([null, null]);
 

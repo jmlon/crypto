@@ -13,9 +13,9 @@ See the file examples.js for basic usage patterns.
 
 
 ## Abount the examples
-- npm test : Run mocha tests.
-- node ecExamples.js : Runs the example program demonstrating elliptic curve operations.
-- node ecdhExample.js : Runs the elliptic curve diffie-hellman key agreement example.
+- `npm test` : Run mocha tests.
+- `node ecExamples.js` : Runs the example program demonstrating elliptic curve operations.
+- `node ecdhExample.js` : Runs the elliptic curve Diffie-Hellman key agreement example.
 
 ## References
 

@@ -5,7 +5,7 @@
  * @type {EllipticCurve}
  */
 
-function makeEllipticCurve(a, b, prime) {
+function makeEllipticCurve(a, b, aprime) {
 
   if (4n*a**3n+27n*b**2n===0n) {
     //console.error('Singular curve. Cannot instantiate.');
@@ -14,7 +14,7 @@ function makeEllipticCurve(a, b, prime) {
 
   this.a = a;
   this.b = b;
-  this.prime = prime;
+  this.prime = aprime;
 
   this.toString = function() { return `y^2 = x^3 + ${a} x + ${b}` }
 
@@ -44,17 +44,24 @@ function makeEllipticCurve(a, b, prime) {
     };
   }
 
-  function fieldModP(x) {
-    let y = x%prime;
-    if (y<0n) y += (-y/prime+1n)*prime;
+  this.fieldModP = function(x) {
+    let y = x % this.prime;
+    if (y<0n) y += (-y/this.prime+1n)*this.prime;
     return y;
   }
 
-  function invModp(a) {
-    const r = egcd(a,prime);
-    let s = r.bezout[0];
-    return fieldModP(s);
+  this.invModp = function(a) {
+    return this.invModx(a,this.prime);
   }
+
+  this.invModx = function(a,x) {
+    const r = egcd(a,x);
+    let s = r.bezout[0];
+    let y = s%x;
+    if (y<0n) y += (-y/x+1n)*x;
+    return y;
+  }
+
 
   this.double = function double(P) {
     // console.log(P.x);
@@ -62,11 +69,11 @@ function makeEllipticCurve(a, b, prime) {
     const num = (3n*P.x**2n+a);
     const dem = (2n*P.y);
     // console.log(`${num}  ${dem}`);
-    const s = fieldModP( num * invModp(dem) ) ; // the slope of the tangent
+    const s = this.fieldModP( num * this.invModp(dem) ) ; // the slope of the tangent
     // console.log(`s=${s}`);
     let r = [0n,0n];
-    r[0] = fieldModP(s**2n - P.x - P.x);
-    r[1] = fieldModP(s*(P.x-r[0]) - P.y);
+    r[0] = this.fieldModP(s**2n - P.x - P.x);
+    r[1] = this.fieldModP(s*(P.x-r[0]) - P.y);
     return new this.makePoint(r);
   }
 
@@ -78,11 +85,11 @@ function makeEllipticCurve(a, b, prime) {
     // when p,q are not the point at infinity O
     if (P.x!==Q.x) {
       // points with different x
-      const num = fieldModP(P.y-Q.y);
-      const dem = fieldModP(P.x-Q.x);
-      s = fieldModP(num*invModp(dem)); // the slope between two points
+      const num = this.fieldModP(P.y-Q.y);
+      const dem = this.fieldModP(P.x-Q.x);
+      s = this.fieldModP(num*this.invModp(dem)); // the slope between two points
     }
-    else if ( (P.y+Q.y)%prime === 0n ) {
+    else if ( (P.y+Q.y)%this.prime === 0n ) {
       // the points are in the same vertical line
       return this.PointAtInfinity;
     }
@@ -90,16 +97,16 @@ function makeEllipticCurve(a, b, prime) {
       // both points are the same
       const num = (3n*P.x**2n+a);
       const dem = (2n*P.y);
-      s = fieldModP(num*invModp(dem)) ; // the slope of the tangent at P
+      s = this.fieldModP(num*this.invModp(dem)) ; // the slope of the tangent at P
     }
-    r[0] = fieldModP(s**2n - P.x - Q.x);
-    r[1] = fieldModP(s*(P.x-r[0]) - P.y);
+    r[0] = this.fieldModP(s**2n - P.x - Q.x);
+    r[1] = this.fieldModP(s*(P.x-r[0]) - P.y);
     return new this.makePoint(r);
   }
 
   this.isInCurve = function(P) {
-    const lhs = fieldModP(P.y**2n);
-    const rhs = fieldModP(P.x**3n + a*P.x + b);
+    const lhs = this.fieldModP(P.y**2n);
+    const rhs = this.fieldModP(P.x**3n + a*P.x + b);
     return lhs === rhs;
   }
 
@@ -117,7 +124,7 @@ function makeEllipticCurve(a, b, prime) {
   }
 
   this.inverseOf = function(P) {
-    return new this.makePoint([ P.x, (prime-P.y) ]);
+    return new this.makePoint([ P.x, (this.prime-P.y) ]);
   }
 
 

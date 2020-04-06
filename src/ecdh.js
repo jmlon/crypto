@@ -1,4 +1,4 @@
-/*
+ /*
   The Diffie-Hellman key-agreement protocol for EC
 */
 
@@ -8,10 +8,9 @@ function ecdh(ec, generator) {
 
   this.ec = ec;
   this.g = generator;
-  this.p = ec.prime;
 
   this.generateKeys = function generateKeys() {
-    this.privateKey = random(bits(this.p)) % this.p;
+    this.privateKey = random(bits(ec.prime)) % ec.prime;
     this.publicKey = this.ec.multiplyByScalar(this.g, this.privateKey);
   }
 

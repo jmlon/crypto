@@ -1,4 +1,4 @@
-const random = require('random-bigint');
+const random = require('random-bigint');    // https://www.npmjs.com/package/random-bigint
 
 /*
   n = order of the subgroup. Must be prime

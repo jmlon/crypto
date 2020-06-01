@@ -2,7 +2,7 @@
   "name": "purenodecrypto",
   "version": "1.0.0",
   "description": "Implementations of basic cryptographic primitives in pure node.js",
-  "main": "index.js",
+  "main": "ellipticCurve.js",
   "directories": {
     "test": "test"
   },
